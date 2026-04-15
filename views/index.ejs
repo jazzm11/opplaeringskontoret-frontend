@@ -1,0 +1,24 @@
+<%- include('partials/header') %>
+<h1>Dashboard</h1>
+
+<% if (typeof error !== "undefined") { %>
+  <p class="message error"><%= error %></p>
+<% } %>
+
+<h2>Your bedrifter</h2>
+
+<% if (!Array.isArray(bedrifter) || bedrifter.length === 0) { %>
+  <p>You have not created any bedrift yet.</p>
+<% } else { %>
+  <div class="bedrift-grid">
+    <% bedrifter.forEach((bedrift) => { %>
+      <article class="bedrift-card">
+        <h3><%= bedrift.name %></h3>
+        <p>Type: <strong><%= bedrift.type %></strong></p>
+        <p>Elever: <strong><%= bedrift.elevCount %></strong></p>
+      </article>
+    <% }) %>
+  </div>
+<% } %>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="no">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Opplæringskontoret</title>
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <a href="/" class="logo">Opplæringskontoret</a>
+        <div class="nav-links">
+            <% if (typeof user !== "undefined" && user && user.role === "admin") { %>
+                <a href="/">Dashboard</a>
+                <a href="/bedrift/create">Opprett bedrift</a>
+                <a href="/bedrift/register-elev">Register elev</a>
+                <a href="/bedrift/send-vurdering">Send vurdering</a>
+                <a href="/logout">Logout</a>
+            <% } else if (typeof user !== "undefined" && user && user.role === "elev") { %>
+                <a href="/student/dashboard">Student dashboard</a>
+                <a href="/logout">Logout</a>
+            <% } else { %>
+                <a href="/login-user">Login</a>
+                <a href="/register">Register</a>
+            <% } %>
+        </div>
+    </nav>
+
+    <div class="container">

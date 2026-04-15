@@ -1,0 +1,20 @@
+<%- include('partials/header') %>
+    <h1>Login User</h1>
+    <form action="/login/user" method="POST">
+
+        <label>Email</label>
+        <input type="email" name="email" required />
+
+        <label>Password</label>
+        <input type="password" name="password" required />
+
+        <button type="submit">Login</button>
+        <a href="/register">Don't have an account?</a>
+        <a href="/login-student">Login as a student?</a>
+    </form>
+
+    <% if (typeof error !== "undefined") { %>
+        <p style="color:red;"><%= error %></p>
+    <% } %>
+
+    <%- include('partials/footer') %>

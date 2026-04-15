@@ -1,0 +1,58 @@
+<%- include('partials/header') %>
+
+<h1>Send vurdering</h1>
+<p>Velg bedrift, elev og skriv en vurdering.</p>
+
+<form action="/bedrift/send-vurdering" method="GET">
+  <label for="bedriftIdFilter">Bedrift</label>
+  <select id="bedriftIdFilter" name="bedriftId" required>
+    <option value="">Velg bedrift</option>
+    <% if (Array.isArray(bedrifter)) { %>
+      <% bedrifter.forEach((bedrift) => { %>
+        <option value="<%= bedrift._id %>" <%= activeBedriftId === String(bedrift._id) ? "selected" : "" %>>
+          <%= bedrift.name %>
+        </option>
+      <% }) %>
+    <% } %>
+  </select>
+  <button type="submit">Last elever</button>
+</form>
+
+<form action="/bedrift/send-vurdering" method="POST">
+  <label for="bedriftId">Bedrift</label>
+  <select id="bedriftId" name="bedriftId" required>
+    <option value="">Velg bedrift</option>
+    <% if (Array.isArray(bedrifter)) { %>
+      <% bedrifter.forEach((bedrift) => { %>
+        <option value="<%= bedrift._id %>" <%= activeBedriftId === String(bedrift._id) ? "selected" : "" %>>
+          <%= bedrift.name %>
+        </option>
+      <% }) %>
+    <% } %>
+  </select>
+
+  <label for="elevId">Elev</label>
+  <select id="elevId" name="elevId" required>
+    <option value="">Velg elev</option>
+    <% if (Array.isArray(elever)) { %>
+      <% elever.forEach((elev) => { %>
+        <option value="<%= elev._id %>"><%= elev.name %> - <%= elev.email %></option>
+      <% }) %>
+    <% } %>
+  </select>
+
+  <label for="text">Vurdering</label>
+  <textarea id="text" name="text" rows="5" placeholder="Skriv vurderingen her..." required></textarea>
+
+  <button type="submit">Send vurdering</button>
+</form>
+
+<% if (typeof error !== "undefined") { %>
+  <p class="message error"><%= error %></p>
+<% } %>
+
+<% if (typeof success !== "undefined") { %>
+  <p class="message success"><%= success %></p>
+<% } %>
+
+<%- include('partials/footer') %>

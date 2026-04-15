@@ -1,0 +1,27 @@
+<%- include('partials/header') %>
+
+<h1>Student Dashboard</h1>
+
+<% if (typeof error !== "undefined") { %>
+  <p class="message error"><%= error %></p>
+<% } %>
+
+<% if (elev && elev.bedrift) { %>
+  <p>Bedrift: <strong><%= elev.bedrift.name %></strong></p>
+<% } %>
+
+<h2>Vurderinger</h2>
+<% if (!elev || !Array.isArray(elev.vurderinger) || elev.vurderinger.length === 0) { %>
+  <p>Du har ingen vurderinger enda.</p>
+<% } else { %>
+  <div class="bedrift-grid">
+    <% elev.vurderinger.slice().reverse().forEach((vurdering) => { %>
+      <article class="bedrift-card">
+        <p><strong>Dato:</strong> <%= new Date(vurdering.createdAt).toLocaleString("no-NO") %></p>
+        <p><%= vurdering.text %></p>
+      </article>
+    <% }) %>
+  </div>
+<% } %>
+
+<%- include('partials/footer') %>
