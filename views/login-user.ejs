@@ -1,16 +1,31 @@
 <%- include('partials/header') %>
-    <h1>Login User</h1>
+    <h1>Logg inn</h1>
+
+    <h2>Innlogging for admin</h2>
     <form action="/login/user" method="POST">
 
-        <label>Email</label>
+        <label>E-post</label>
         <input type="email" name="email" required />
 
         <label>Password</label>
         <input type="password" name="password" required />
 
-        <button type="submit">Login</button>
-        <a href="/register">Don't have an account?</a>
-        <a href="/login-student">Login as a student?</a>
+        <button type="submit">Logg inn som admin</button>
+        <a href="/register">Har du ikke en konto?</a>
+        <a href="/login-student">Logg inn som elev?</a>
+    </form>
+
+    <hr />
+
+    <h2>Innlogging for bedrift</h2>
+    <form action="/login/bedrift" method="POST">
+        <label>E-post</label>
+        <input type="email" name="email" required />
+
+        <label>Password</label>
+        <input type="password" name="password" required />
+
+        <button type="submit">Logg inn som bedrift</button>
     </form>
 
     <% if (typeof error !== "undefined") { %>

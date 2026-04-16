@@ -1,0 +1,46 @@
+<%- include('partials/header') %>
+
+  <h1>Bedriftoversikt</h1>
+
+  <% if (typeof error !=="undefined" && error) { %>
+    <p class="message error">
+      <%= error %>
+    </p>
+    <% } %>
+
+      <% if (!bedrift) { %>
+        <p>Ingen bedriftsinformasjon tilgjengelig.</p>
+        <% } else { %>
+          <h2>
+            <%= bedrift.name %>
+          </h2>
+          <p>E-post: <strong>
+              <%= bedrift.email %>
+            </strong></p>
+          <p>Type: <strong>
+              <%= bedrift.type %>
+            </strong></p>
+          <% if (bedrift.contactPerson) { %>
+          <p>Kontaktperson: <strong>
+                <%= bedrift.contactPerson %>
+              </strong></p>
+            <% } %>
+
+              <h3>Elever</h3>
+
+              <% if (elever.length === 0) { %>
+                <p>Denne bedriften har ingen elever ennå.</p>
+                <% } else { %>
+                  <ol>
+                    <% elever.forEach((elev)=> { %>
+                      <li>
+                        <strong>
+                          <%= elev.name %>
+                        </strong> - <%= elev.email %>
+                      </li>
+                      <% }) %>
+                  </ol>
+                  <% } %>
+                    <% } %>
+
+                      <%- include('partials/footer') %>

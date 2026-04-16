@@ -1,14 +1,14 @@
 <%- include('partials/header') %>
-<h1>Dashboard</h1>
+<h1>Oversikt</h1>
 
 <% if (typeof error !== "undefined") { %>
   <p class="message error"><%= error %></p>
 <% } %>
 
-<h2>Your bedrifter</h2>
+<h2>Dine bedrifter</h2>
 
 <% if (!Array.isArray(bedrifter) || bedrifter.length === 0) { %>
-  <p>You have not created any bedrift yet.</p>
+  <p>Du har ikke opprettet noen bedrift ennå.</p>
 <% } else { %>
   <div class="bedrift-grid">
     <% bedrifter.forEach((bedrift) => { %>

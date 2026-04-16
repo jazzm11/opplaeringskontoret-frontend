@@ -2,6 +2,7 @@ const postApi = require("../utils/postApi");
 const getApi = require("../utils/getApi");
 
 const showCreateBedrift = (req, res) => {
+  console.log("[SUCCESS][FRONTEND][PAGE] Rendered create-bedrift");
   res.render("create-bedrift");
 };
 
@@ -20,41 +21,37 @@ const loadVurderingFormData = async (token, selectedBedriftId) => {
   return { bedrifter, elever, activeBedriftId };
 };
 
-const showRegisterElev = async (req, res) => {
+const showRegisterElev = async (req, res, next) => {
   try {
     const token = req.cookies.token;
     const response = await getApi("/bedrift/mine", token);
     const bedrifter = response.bedrifter || [];
+    console.log("[SUCCESS][FRONTEND][PAGE] Rendered register-elev");
     return res.render("register-elev", { bedrifter });
   } catch (error) {
-    console.log(error);
-    return res.render("register-elev", {
-      bedrifter: [],
-      error: "Could not load your bedrifter.",
-    });
+    error.status = 500;
+    error.message = "Kunne ikke laste bedriftene dine.";
+    return next(error);
   }
 };
 
-const showVurderingForm = async (req, res) => {
+const showVurderingForm = async (req, res, next) => {
   try {
     const token = req.cookies.token;
     const { bedriftId } = req.query;
     const data = await loadVurderingFormData(token, bedriftId);
+    console.log("[SUCCESS][FRONTEND][PAGE] Rendered send-vurdering");
     return res.render("send-vurdering", data);
   } catch (error) {
-    console.log(error);
-    return res.render("send-vurdering", {
-      bedrifter: [],
-      elever: [],
-      activeBedriftId: "",
-      error: "Could not load vurdering form data.",
-    });
+    error.status = 500;
+    error.message = "Kunne ikke laste data for vurderingsskjema.";
+    return next(error);
   }
 };
 
-const createBedrift = async (req, res) => {
+const createBedrift = async (req, res, next) => {
   try {
-    const { name, type, contactPerson } = req.body;
+    const { name, type, contactPerson, email, password, confirmPassword } = req.body;
     const token = req.cookies.token;
     const response = await postApi(
       "/bedrift/create",
@@ -62,6 +59,9 @@ const createBedrift = async (req, res) => {
         name,
         type,
         contactPerson,
+        email,
+        password,
+        confirmPassword,
       },
       token
     );
@@ -72,18 +72,21 @@ const createBedrift = async (req, res) => {
         name,
         type,
         contactPerson,
+        email,
+        password,
+        confirmPassword,
       });
     }
+    console.log(`[SUCCESS][FRONTEND][BEDRIFT] Bedrift created: ${name} (${email})`);
     res.redirect("/");
   } catch (error) {
-    console.log(error);
-    res.render("create-bedrift", {
-      error: "Unexpected error occurred. Please try again.",
-    });
+    error.status = 500;
+    error.message = "En uventet feil oppstod. Prøv igjen.";
+    return next(error);
   }
 };
 
-const registerElev = async (req, res) => {
+const registerElev = async (req, res, next) => {
   try {
     const { name, email, bedriftId } = req.body;
     const token = req.cookies.token;
@@ -108,24 +111,19 @@ const registerElev = async (req, res) => {
     }
 
     const bedrifterResponse = await getApi("/bedrift/mine", token);
+    console.log(`[SUCCESS][FRONTEND][BEDRIFT] Elev registered: ${email}`);
     return res.render("register-elev", {
       bedrifter: bedrifterResponse.bedrifter || [],
-      success: "Elev registered successfully.",
+      success: "Elev ble registrert.",
     });
   } catch (error) {
-    console.log(error);
-    const token = req.cookies.token;
-    const bedrifterResponse = await getApi("/bedrift/mine", token).catch(() => ({
-      bedrifter: [],
-    }));
-    return res.render("register-elev", {
-      bedrifter: bedrifterResponse.bedrifter || [],
-      error: "Unexpected error occurred. Please try again.",
-    });
+    error.status = 500;
+    error.message = "En uventet feil oppstod. Prøv igjen.";
+    return next(error);
   }
 };
 
-const sendVurdering = async (req, res) => {
+const sendVurdering = async (req, res, next) => {
   try {
     const { bedriftId, elevId, text } = req.body;
     const token = req.cookies.token;
@@ -144,23 +142,15 @@ const sendVurdering = async (req, res) => {
       });
     }
 
+    console.log(`[SUCCESS][FRONTEND][BEDRIFT] Vurdering sent to elev: ${elevId}`);
     return res.render("send-vurdering", {
       ...data,
-      success: "Vurdering sent successfully.",
+      success: "Vurdering ble sendt.",
     });
   } catch (error) {
-    console.log(error);
-    const token = req.cookies.token;
-    const { bedriftId } = req.body;
-    const data = await loadVurderingFormData(token, bedriftId).catch(() => ({
-      bedrifter: [],
-      elever: [],
-      activeBedriftId: "",
-    }));
-    return res.render("send-vurdering", {
-      ...data,
-      error: "Unexpected error occurred. Please try again.",
-    });
+    error.status = 500;
+    error.message = "En uventet feil oppstod. Prøv igjen.";
+    return next(error);
   }
 };
 

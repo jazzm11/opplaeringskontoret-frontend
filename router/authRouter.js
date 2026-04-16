@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 // Controllers
-const { showLoginUser, showLoginStudent, showRegister, loginUser, register, loginStudent, logout } = require("../controller/authController");
+const { showLoginUser, showLoginStudent, showRegister, loginUser, register, loginStudent, loginBedrift, logout } = require("../controller/authController");
 
 // Routes
 
@@ -16,5 +16,6 @@ router.get("/logout", logout);
 router.post("/login/user", loginUser);
 router.post("/register/user", register);
 router.post("/login/student", loginStudent);
+router.post("/login/bedrift", loginBedrift);
 
 module.exports = router;
