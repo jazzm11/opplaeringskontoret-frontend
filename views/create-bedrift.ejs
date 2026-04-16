@@ -1,22 +1,24 @@
 <%- include('partials/header') %>
-    <h1>Opprett en Bedrift</h1>
+    <h1>Opprett en bedrift</h1>
 
 
     <form action="/bedrift/create" method="POST">
-        <label>Bedrift Navn</label>
+        <label>Bedrift navn:</label>
         <input type="text" name="name" required />
-
-        <label>Type</label>
+        <label>E-post:</label>
+        <input type="email" name="email" required />
+        <label>Passord:</label>
+        <input type="password" name="password" required />
+        <label>Bekreft passord:</label>
+        <input type="password" name="confirmPassword" required />
+        <label>Type:</label>
         <select name="type" required>
-            <option value="">Velg type</option>
             <option value="praksis">Praksis</option>
             <option value="laerebedrift">Laerebedrift</option>
         </select>
-
-        <label>Kontaktperson</label>
+        <label>Kontaktperson:</label>
         <input type="text" name="contactPerson" required />
-
-        <button type="submit">Opprett</button>
+        <button type="submit">Opprett bedrift</button>
     </form>
 
     <% if (typeof error !=="undefined" ) { %>

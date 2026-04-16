@@ -1,24 +1,28 @@
 <%- include('partials/header') %>
-    <h1>Login Student</h1>
+    <h1>Elevinnlogging</h1>
     <form action="/login/student" method="POST">
 
-        <label>Email</label>
+        <label>E-post</label>
         <input type="email" name="email" required />
 
         <label>Password</label>
         <input type="password" name="password" required />
 
-        <label>Confirm Password</label>
-        <input type="password" name="confirmPassword" required />
-
-        <button type="submit">Register</button>
-        <a href="/login-user">Log in as an admin?</a>
+        <button type="submit">Logg inn</button>
+        <a href="/login-user">Logg inn som admin?</a>
     </form>
 
-    <% if (typeof error !=="undefined" ) { %>
-        <p style="color:red;">
-            <%= error %>
-        </p>
-        <% } %>
+    <hr />
 
-            <%- include('partials/footer') %>
+    <h2>Sett opp passord for elev</h2>
+    <form action="/login/student" method="POST">
+        <label>E-post</label>
+        <input type="email" name="email" value="<%= typeof email !== 'undefined' ? email : '' %>" required />
+        <label>Password</label>
+        <input type="password" name="password" required />
+        <label>Bekreft passord</label>
+        <input type="password" name="confirmPassword" required />
+        <button type="submit">Logg inn som elev</button>
+    </form>
+
+    <%- include('partials/footer') %>

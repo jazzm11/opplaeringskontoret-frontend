@@ -1,22 +1,22 @@
 <%- include('partials/header') %>
-    <h1>Register User</h1>
+    <h1>Registrer bruker</h1>
     <form action="/register/user" method="POST">
 
-        <label>Name</label>
+        <label>Navn</label>
         <input type="text" name="name" required />
 
-        <label>Email</label>
+        <label>E-post</label>
         <input type="email" name="email" required />
 
         <label>Password</label>
         <input type="password" name="password" required />
 
-        <label>Confirm Password</label>
+        <label>Bekreft passord</label>
         <input type="password" name="confirmPassword" required />
 
-        <button type="submit">Register</button>
-        <a href="/login-user">Already have an account?</a>
-        <a href="/login-student">Login as a student?</a>
+        <button type="submit">Registrer</button>
+        <a href="/login-user">Har du allerede en konto?</a>
+        <a href="/login-student">Logg inn som elev?</a>
     </form>
 
     <% if (typeof error !=="undefined" ) { %>

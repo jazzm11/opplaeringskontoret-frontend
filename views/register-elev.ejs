@@ -1,18 +1,18 @@
 <%- include('partials/header') %>
 
-<h1>Register Elev</h1>
-<p>Add a student to a specific bedrift.</p>
+<h1>Registrer elev</h1>
+<p>Legg til en elev i en valgt bedrift.</p>
 
 <form action="/bedrift/register-elev" method="POST">
-  <label for="name">Name</label>
+  <label for="name">Navn</label>
   <input id="name" type="text" name="name" value="<%= typeof name !== 'undefined' ? name : '' %>" required />
 
-  <label for="email">Email</label>
+  <label for="email">E-post</label>
   <input id="email" type="email" name="email" value="<%= typeof email !== 'undefined' ? email : '' %>" required />
 
   <label for="bedriftId">Bedrift</label>
   <select id="bedriftId" name="bedriftId" required>
-    <option value="">Choose your bedrift</option>
+    <option value="">Velg bedrift</option>
     <% if (Array.isArray(bedrifter)) { %>
       <% bedrifter.forEach((bedrift) => { %>
         <option value="<%= bedrift._id %>" <%= typeof bedriftId !== 'undefined' && bedriftId === String(bedrift._id) ? 'selected' : '' %>>
@@ -23,10 +23,10 @@
   </select>
 
   <% if (!Array.isArray(bedrifter) || bedrifter.length === 0) { %>
-    <p class="message error">You do not have any bedrift yet. Create one first.</p>
+    <p class="message error">Du har ingen bedrifter ennå. Opprett en først.</p>
   <% } %>
 
-  <button type="submit">Register elev</button>
+  <button type="submit">Registrer elev</button>
 </form>
 
 <% if (typeof error !== "undefined") { %>
