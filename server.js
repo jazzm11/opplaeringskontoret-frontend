@@ -16,9 +16,11 @@ app.use(cookieParser());
 const dashboardRouter = require("./router/dashboardRouter");
 const authRouter = require("./router/authRouter");
 const bedriftRouter = require("./router/bedriftRouter");
+const faqRouter = require("./router/faqRouter");
 
 // Routes
 app.use(dashboardRouter);
+app.use(faqRouter);
 app.use(authRouter);
 app.use(bedriftRouter);
 
