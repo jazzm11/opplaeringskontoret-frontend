@@ -8,6 +8,7 @@ const showDashboard = async (req, res, next) => {
     console.log("[SUCCESS][FRONTEND][PAGE] Rendered admin dashboard");
     return res.render("index", {
       bedrifter: response.bedrifter || [],
+      notifications: response.notifications || [],
     });
   } catch (error) {
     error.status = 500;

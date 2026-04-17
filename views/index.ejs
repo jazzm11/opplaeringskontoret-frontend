@@ -5,6 +5,17 @@
   <p class="message error"><%= error %></p>
 <% } %>
 
+<% if (Array.isArray(notifications) && notifications.length > 0) { %>
+  <h2>Varsler</h2>
+  <div class="bedrift-grid">
+    <% notifications.forEach((notice) => { %>
+      <article class="bedrift-card">
+        <p><%= notice %></p>
+      </article>
+    <% }) %>
+  </div>
+<% } %>
+
 <h2>Dine bedrifter</h2>
 
 <% if (!Array.isArray(bedrifter) || bedrifter.length === 0) { %>

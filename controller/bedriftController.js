@@ -86,19 +86,25 @@ const createBedrift = async (req, res, next) => {
   }
 };
 
+// Registrerer en elev i en bedrift
 const registerElev = async (req, res, next) => {
   try {
-    const { name, email, bedriftId } = req.body;
+    const { name, email, bedriftId, stayDurationDays, stayDurationMinutesTest } = req.body;
     const token = req.cookies.token;
+
+    // Registrerer elev i bedriften
     const response = await postApi(
       `/bedrift/${bedriftId}/register-elev`,
       {
         name,
         email,
+        stayDurationDays,
+        stayDurationMinutesTest,
       },
       token
     );
 
+    // Hvis det oppstod en feil, returnerer vi tilbake til registreringssiden med en feilmelding
     if (response.error) {
       const bedrifterResponse = await getApi("/bedrift/mine", token);
       return res.render("register-elev", {
@@ -107,10 +113,15 @@ const registerElev = async (req, res, next) => {
         name,
         email,
         bedriftId,
+        stayDurationDays,
+        stayDurationMinutesTest,
       });
     }
 
+    // Henter bedriftene som brukeren har opprettet 
     const bedrifterResponse = await getApi("/bedrift/mine", token);
+
+    // Logger suksess
     console.log(`[SUCCESS][FRONTEND][BEDRIFT] Elev registered: ${email}`);
     return res.render("register-elev", {
       bedrifter: bedrifterResponse.bedrifter || [],
