@@ -22,6 +22,27 @@
     <% } %>
   </select>
 
+  <label for="stayDurationDays">Varighet i bedrift (dager)</label>
+  <input
+    id="stayDurationDays"
+    type="number"
+    name="stayDurationDays"
+    min="1"
+    value="<%= typeof stayDurationDays !== 'undefined' ? stayDurationDays : 30 %>"
+    required
+  />
+  <small>Normal drift: bruk dager.</small>
+
+  <label for="stayDurationMinutesTest">Testmodus: utlop om X minutter (valgfritt)</label>
+  <input
+    id="stayDurationMinutesTest"
+    type="number"
+    name="stayDurationMinutesTest"
+    min="1"
+    value="<%= typeof stayDurationMinutesTest !== 'undefined' ? stayDurationMinutesTest : '' %>"
+  />
+  <small>Hvis fylt ut, overstyrer denne dager-feltet kun for testing.</small>
+
   <% if (!Array.isArray(bedrifter) || bedrifter.length === 0) { %>
     <p class="message error">Du har ingen bedrifter ennå. Opprett en først.</p>
   <% } %>
